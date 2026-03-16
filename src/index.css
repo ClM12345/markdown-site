@@ -28,5 +28,18 @@
 
 @media print {
   .no-print { display: none !important; }
+  nav { display: none !important; }
   .markdown-preview { max-width: 100% !important; }
+  body { background: white; }
+  * {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    flex-shrink: 0 !important;
+  }
+  .print-preview-area {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
 }

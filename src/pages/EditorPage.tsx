@@ -44,7 +44,7 @@ export default function EditorPage() {
           导出 HTML
         </button>
         <button
-          onClick={exportPDF}
+          onClick={() => exportPDF(previewRef.current?.innerHTML || '')}
           className="px-3 py-1.5 text-xs font-medium rounded-md border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors"
         >
           导出 PDF
@@ -56,10 +56,10 @@ export default function EditorPage() {
       </div>
 
       <div className="flex-1 flex flex-col md:flex-row min-h-0">
-        <div className="md:w-1/2 h-1/2 md:h-full border-b md:border-b-0 md:border-r border-gray-200">
+        <div className="md:w-1/2 h-1/2 md:h-full border-b md:border-b-0 md:border-r border-gray-200 no-print">
           <MarkdownEditor value={content} onChange={setContent} />
         </div>
-        <div className="md:w-1/2 h-1/2 md:h-full overflow-auto p-6" ref={previewRef}>
+        <div className="md:w-1/2 h-1/2 md:h-full overflow-auto p-6 print-preview-area" ref={previewRef}>
           <MarkdownPreview content={content} />
         </div>
       </div>
