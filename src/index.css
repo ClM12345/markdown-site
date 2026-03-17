@@ -1,36 +1,38 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
-    @apply bg-white text-gray-900 antialiased;
+    @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 antialiased transition-colors duration-200;
   }
 }
 
-.markdown-preview h1 { @apply text-3xl font-bold mt-6 mb-4 pb-2 border-b border-gray-200; }
-.markdown-preview h2 { @apply text-2xl font-bold mt-5 mb-3 pb-1 border-b border-gray-100; }
+.markdown-preview h1 { @apply text-3xl font-bold mt-6 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700; }
+.markdown-preview h2 { @apply text-2xl font-bold mt-5 mb-3 pb-1 border-b border-gray-100 dark:border-gray-800; }
 .markdown-preview h3 { @apply text-xl font-semibold mt-4 mb-2; }
 .markdown-preview h4 { @apply text-lg font-semibold mt-3 mb-1; }
 .markdown-preview p { @apply my-3 leading-relaxed; }
 .markdown-preview ul { @apply list-disc pl-6 my-3; }
 .markdown-preview ol { @apply list-decimal pl-6 my-3; }
 .markdown-preview li { @apply my-1; }
-.markdown-preview blockquote { @apply border-l-4 border-gray-300 pl-4 my-3 text-gray-600 italic; }
-.markdown-preview code { @apply bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600; }
-.markdown-preview pre { @apply bg-gray-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto; }
+.markdown-preview blockquote { @apply border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-3 text-gray-600 dark:text-gray-400 italic; }
+.markdown-preview code { @apply bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600 dark:text-pink-400; }
+.markdown-preview pre { @apply bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto; }
 .markdown-preview pre code { @apply bg-transparent text-gray-100 p-0; }
-.markdown-preview a { @apply text-blue-600 underline hover:text-blue-800; }
+.markdown-preview a { @apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300; }
 .markdown-preview img { @apply max-w-full rounded my-3; }
 .markdown-preview table { @apply w-full border-collapse my-4; }
-.markdown-preview th { @apply border border-gray-300 px-4 py-2 bg-gray-50 font-semibold text-left; }
-.markdown-preview td { @apply border border-gray-300 px-4 py-2; }
-.markdown-preview hr { @apply my-6 border-gray-300; }
+.markdown-preview th { @apply border border-gray-300 dark:border-gray-600 px-4 py-2 bg-gray-50 dark:bg-gray-800 font-semibold text-left; }
+.markdown-preview td { @apply border border-gray-300 dark:border-gray-600 px-4 py-2; }
+.markdown-preview hr { @apply my-6 border-gray-300 dark:border-gray-700; }
 .markdown-preview input[type="checkbox"] { @apply mr-2; }
 
 @media print {
   .no-print { display: none !important; }
   nav { display: none !important; }
   .markdown-preview { max-width: 100% !important; }
-  body { background: white; }
+  body { background: white !important; color: black !important; }
   * {
     height: auto !important;
     max-height: none !important;

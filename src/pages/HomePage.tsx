@@ -11,22 +11,22 @@ export default function HomePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
           Markdown 工具站
         </h1>
-        <p className="text-lg text-gray-500 mb-8 max-w-xl mx-auto">
+        <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-xl mx-auto">
           学习 Markdown 语法，在线编辑和预览，导入导出文件——一站搞定。
         </p>
         <div className="flex gap-3 justify-center">
           <Link
             to="/editor"
-            className="px-6 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors"
+            className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
           >
             开始编辑
           </Link>
           <Link
             to="/guide"
-            className="px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-6 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             学习语法
           </Link>
@@ -37,11 +37,11 @@ export default function HomePage() {
           <Link
             key={f.title}
             to={f.link}
-            className="block p-6 rounded-xl border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all"
+            className="block p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm transition-all bg-white dark:bg-gray-900"
           >
             <div className="text-2xl mb-2">{f.icon}</div>
-            <h3 className="font-semibold text-gray-900 mb-1">{f.title}</h3>
-            <p className="text-sm text-gray-500">{f.desc}</p>
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-1">{f.title}</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{f.desc}</p>
           </Link>
         ))}
       </div>

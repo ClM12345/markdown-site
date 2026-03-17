@@ -1,29 +1,105 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import { readMarkdownFile } from '../utils/file';
+
+type Status = 'idle' | 'hover' | 'loading' | 'success' | 'error';
 
 interface Props {
   onLoad: (content: string) => void;
+  hasContent?: boolean;
 }
 
-export default function FileUpload({ onLoad }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [dragging, setDragging] = useState(false);
+const STATUS_CONFIG: Record<Status, { border: string; bg: string; text: string; label: string }> = {
+  idle: {
+    border: 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500',
+    bg: '',
+    text: 'text-gray-500 dark:text-gray-400',
+    label: '点击选择或拖拽 .md 文件到此处',
+  },
+  hover: {
+    border: 'border-blue-500 dark:border-blue-400',
+    bg: 'bg-blue-50 dark:bg-blue-900/20',
+    text: 'text-blue-600 dark:text-blue-400',
+    label: '松开以导入文件',
+  },
+  loading: {
+    border: 'border-gray-300 dark:border-gray-600',
+    bg: 'bg-gray-50 dark:bg-gray-800',
+    text: 'text-gray-500 dark:text-gray-400',
+    label: '读取中...',
+  },
+  success: {
+    border: 'border-green-500 dark:border-green-400',
+    bg: 'bg-green-50 dark:bg-green-900/20',
+    text: 'text-green-600 dark:text-green-400',
+    label: '导入成功',
+  },
+  error: {
+    border: 'border-red-500 dark:border-red-400',
+    bg: 'bg-red-50 dark:bg-red-900/20',
+    text: 'text-red-600 dark:text-red-400',
+    label: '',
+  },
+};
 
-  const handleFile = useCallback(async (file: File) => {
+export default function FileUpload({ onLoad, hasContent = false }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const dragCounter = useRef(0);
+
+  useEffect(() => {
+    if (status === 'success' || status === 'error') {
+      const t = setTimeout(() => setStatus('idle'), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [status]);
+
+  const processFile = useCallback(async (file: File) => {
+    if (hasContent && !window.confirm('当前编辑器已有内容，导入文件将替换现有内容。确认继续？')) return;
+
+    setStatus('loading');
     try {
       const text = await readMarkdownFile(file);
+      if (!text.trim()) {
+        setErrorMsg('文件内容为空');
+        setStatus('error');
+        return;
+      }
       onLoad(text);
+      setStatus('success');
     } catch (err) {
-      alert(err instanceof Error ? err.message : '文件读取失败');
+      setErrorMsg(err instanceof Error ? err.message : '文件读取失败');
+      setStatus('error');
     }
-  }, [onLoad]);
+  }, [onLoad, hasContent]);
+
+  const handleDragEnter = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    dragCounter.current++;
+    setStatus('hover');
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    dragCounter.current--;
+    if (dragCounter.current <= 0) {
+      dragCounter.current = 0;
+      setStatus('idle');
+    }
+  }, []);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
-    setDragging(false);
+    dragCounter.current = 0;
     const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
-  }, [handleFile]);
+    if (file) {
+      processFile(file);
+    } else {
+      setStatus('idle');
+    }
+  }, [processFile]);
+
+  const cfg = STATUS_CONFIG[status];
 
   return (
     <>
@@ -34,21 +110,20 @@ export default function FileUpload({ onLoad }: Props) {
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (file) handleFile(file);
+          if (file) processFile(file);
           e.target.value = '';
         }}
       />
       <div
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-        onDragLeave={() => setDragging(false)}
+        onDragEnter={handleDragEnter}
+        onDragOver={(e) => e.preventDefault()}
+        onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        onClick={() => inputRef.current?.click()}
-        className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-          dragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
-        }`}
+        onClick={() => status === 'idle' && inputRef.current?.click()}
+        className={`border-2 border-dashed rounded-lg px-4 py-3 text-center cursor-pointer transition-all duration-200 ${cfg.border} ${cfg.bg}`}
       >
-        <p className="text-sm text-gray-500">
-          点击选择或拖拽 .md 文件到此处
+        <p className={`text-xs ${cfg.text} transition-colors`}>
+          {status === 'error' ? errorMsg : cfg.label}
         </p>
       </div>
     </>

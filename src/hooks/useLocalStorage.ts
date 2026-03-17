@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+const SAVE_TIME_SUFFIX = '__saved_at';
 
 export function useLocalStorage(key: string, initialValue: string) {
   const [value, setValue] = useState(() => {
@@ -10,11 +12,33 @@ export function useLocalStorage(key: string, initialValue: string) {
     }
   });
 
+  const [lastSaved, setLastSaved] = useState<string | null>(() => {
+    try { return localStorage.getItem(key + SAVE_TIME_SUFFIX); } catch { return null; }
+  });
+
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
   useEffect(() => {
-    try {
-      localStorage.setItem(key, value);
-    } catch { /* ignore */ }
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      try {
+        localStorage.setItem(key, value);
+        const now = new Date().toLocaleString('zh-CN');
+        localStorage.setItem(key + SAVE_TIME_SUFFIX, now);
+        setLastSaved(now);
+      } catch { /* ignore */ }
+    }, 500);
+    return () => clearTimeout(timerRef.current);
   }, [key, value]);
 
-  return [value, setValue] as const;
+  const clearStorage = useCallback(() => {
+    try {
+      localStorage.removeItem(key);
+      localStorage.removeItem(key + SAVE_TIME_SUFFIX);
+    } catch { /* ignore */ }
+    setValue(initialValue);
+    setLastSaved(null);
+  }, [key, initialValue]);
+
+  return [value, setValue, lastSaved, clearStorage] as const;
 }
