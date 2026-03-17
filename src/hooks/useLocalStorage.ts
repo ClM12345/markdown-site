@@ -16,7 +16,7 @@ export function useLocalStorage(key: string, initialValue: string) {
     try { return localStorage.getItem(key + SAVE_TIME_SUFFIX); } catch { return null; }
   });
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     clearTimeout(timerRef.current);

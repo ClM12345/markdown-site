@@ -5,7 +5,7 @@ export function useScrollSync(
   previewRef: React.RefObject<HTMLDivElement | null>,
 ) {
   const syncing = useRef(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleEditorScroll = useCallback(() => {
     if (syncing.current) return;

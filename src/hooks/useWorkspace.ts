@@ -34,7 +34,7 @@ function loadTabs(): { tabs: Tab[]; activeId: string } {
 export function useWorkspace() {
   const [tabs, setTabs] = useState<Tab[]>(() => loadTabs().tabs);
   const [activeId, setActiveId] = useState(() => loadTabs().activeId);
-  const saveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     clearTimeout(saveTimer.current);

@@ -13,7 +13,7 @@ function load(): RecentFile[] {
 
 export function useRecentFiles() {
   const [files, setFiles] = useState<RecentFile[]>(load);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     clearTimeout(timer.current);
