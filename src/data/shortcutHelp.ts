@@ -1,55 +1,52 @@
-export interface ShortcutEntry {
-  keys: string;
-  desc: string;
-}
+import type { Messages } from '../i18n/zh-CN';
 
-export interface ShortcutGroup {
-  title: string;
-  items: ShortcutEntry[];
-}
+export interface ShortcutEntry { keys: string; desc: string; }
+export interface ShortcutGroup { title: string; items: ShortcutEntry[]; }
 
-export const SHORTCUT_GROUPS: ShortcutGroup[] = [
-  {
-    title: '文件与标签',
-    items: [
-      { keys: 'Mod+S', desc: '保存当前标签' },
-      { keys: 'Mod+Shift+S', desc: '导出 .md 文件' },
-      { keys: 'Mod+O', desc: '打开文件' },
-      { keys: 'Mod+N', desc: '新建标签' },
-      { keys: 'Mod+W', desc: '关闭当前标签' },
-    ],
-  },
-  {
-    title: '编辑操作',
-    items: [
-      { keys: 'Mod+Z', desc: '撤销' },
-      { keys: 'Mod+Shift+Z', desc: '重做' },
-      { keys: 'Mod+Y', desc: '重做 (Windows)' },
-    ],
-  },
-  {
-    title: '搜索与替换',
-    items: [
-      { keys: 'Mod+F', desc: '打开搜索' },
-      { keys: 'Mod+H', desc: '打开替换' },
-      { keys: 'Mod+G', desc: '下一个匹配' },
-      { keys: 'Mod+Shift+G', desc: '上一个匹配' },
-    ],
-  },
-  {
-    title: 'Markdown 格式',
-    items: [
-      { keys: 'Mod+B', desc: '粗体' },
-      { keys: 'Mod+I', desc: '斜体' },
-      { keys: 'Mod+E', desc: '行内代码' },
-      { keys: 'Mod+Shift+K', desc: '代码块' },
-      { keys: 'Mod+Alt+1', desc: '一级标题' },
-      { keys: 'Mod+Alt+2', desc: '二级标题' },
-      { keys: 'Mod+Alt+3', desc: '三级标题' },
-      { keys: 'Mod+Shift+7', desc: '无序列表' },
-      { keys: 'Mod+Shift+8', desc: '有序列表' },
-      { keys: 'Mod+Shift+9', desc: '任务列表' },
-      { keys: 'Mod+Shift+L', desc: '插入链接' },
-    ],
-  },
-];
+export function getShortcutGroups(sd: Messages['shortcutDesc']): ShortcutGroup[] {
+  return [
+    {
+      title: sd.groupFileTab,
+      items: [
+        { keys: 'Mod+S', desc: sd.save },
+        { keys: 'Mod+Shift+S', desc: sd.exportMd },
+        { keys: 'Mod+O', desc: sd.openFile },
+        { keys: 'Mod+N', desc: sd.newTab },
+        { keys: 'Mod+W', desc: sd.closeTab },
+      ],
+    },
+    {
+      title: sd.groupEdit,
+      items: [
+        { keys: 'Mod+Z', desc: sd.undo },
+        { keys: 'Mod+Shift+Z', desc: sd.redo },
+        { keys: 'Mod+Y', desc: sd.redoWin },
+      ],
+    },
+    {
+      title: sd.groupSearch,
+      items: [
+        { keys: 'Mod+F', desc: sd.openSearch },
+        { keys: 'Mod+H', desc: sd.openReplace },
+        { keys: 'Mod+G', desc: sd.nextMatch },
+        { keys: 'Mod+Shift+G', desc: sd.prevMatch },
+      ],
+    },
+    {
+      title: sd.groupFormat,
+      items: [
+        { keys: 'Mod+B', desc: sd.bold },
+        { keys: 'Mod+I', desc: sd.italic },
+        { keys: 'Mod+E', desc: sd.inlineCode },
+        { keys: 'Mod+Shift+K', desc: sd.codeBlock },
+        { keys: 'Mod+Alt+1', desc: sd.h1 },
+        { keys: 'Mod+Alt+2', desc: sd.h2 },
+        { keys: 'Mod+Alt+3', desc: sd.h3 },
+        { keys: 'Mod+Shift+7', desc: sd.ul },
+        { keys: 'Mod+Shift+8', desc: sd.ol },
+        { keys: 'Mod+Shift+9', desc: sd.taskList },
+        { keys: 'Mod+Shift+L', desc: sd.insertLink },
+      ],
+    },
+  ];
+}

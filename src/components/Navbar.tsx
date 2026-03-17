@@ -1,13 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useI18n } from '../i18n/context';
 
-const NAV_ITEMS = [
-  { path: '/', label: '首页' },
-  { path: '/intro', label: 'Markdown 介绍' },
-  { path: '/guide', label: '语法教学' },
-  { path: '/editor', label: '在线编辑器' },
-];
+const NAV_PATHS = ['/', '/intro', '/guide', '/editor', '/help'] as const;
 
 interface Props {
   theme: string;
@@ -17,6 +14,8 @@ interface Props {
 export default function Navbar({ theme, onToggleTheme }: Props) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
+  const { t } = useI18n();
+  const labels = [t.nav.home, t.nav.intro, t.nav.guide, t.nav.editor, t.nav.help];
 
   return (
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 no-print">
@@ -26,20 +25,21 @@ export default function Navbar({ theme, onToggleTheme }: Props) {
         </Link>
         <div className="flex items-center gap-1">
           <div className="hidden md:flex gap-1">
-            {NAV_ITEMS.map((item) => (
+            {NAV_PATHS.map((path, i) => (
               <Link
-                key={item.path}
-                to={item.path}
+                key={path}
+                to={path}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  pathname === item.path
+                  pathname === path
                     ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
                     : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
-                {item.label}
+                {labels[i]}
               </Link>
             ))}
           </div>
+          <LanguageSwitcher />
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           <button
             className="md:hidden p-2 text-gray-600 dark:text-gray-300"
@@ -57,18 +57,18 @@ export default function Navbar({ theme, onToggleTheme }: Props) {
       </div>
       {open && (
         <div className="md:hidden border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
-          {NAV_ITEMS.map((item) => (
+          {NAV_PATHS.map((path, i) => (
             <Link
-              key={item.path}
-              to={item.path}
+              key={path}
+              to={path}
               onClick={() => setOpen(false)}
               className={`block px-4 py-3 text-sm font-medium border-b border-gray-50 dark:border-gray-800 ${
-                pathname === item.path
+                pathname === path
                   ? 'bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white'
                   : 'text-gray-600 dark:text-gray-300'
               }`}
             >
-              {item.label}
+              {labels[i]}
             </Link>
           ))}
         </div>
