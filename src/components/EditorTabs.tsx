@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react';
 import type { Tab } from '../types/workspace';
 
 interface Props {
@@ -7,9 +8,50 @@ interface Props {
   onSwitch: (id: string) => void;
   onClose: (id: string) => void;
   onAdd: () => void;
+  onRename: (id: string, name: string) => void;
 }
 
-export default function EditorTabs({ tabs, activeId, isModified, onSwitch, onClose, onAdd }: Props) {
+function TabName({ tab, active, onRename }: { tab: Tab; active: boolean; onRename: (name: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(tab.name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editing) inputRef.current?.select();
+  }, [editing]);
+
+  const commit = () => {
+    const trimmed = value.trim();
+    if (trimmed && trimmed !== tab.name) onRename(trimmed);
+    else setValue(tab.name);
+    setEditing(false);
+  };
+
+  if (editing && active) {
+    return (
+      <input
+        ref={inputRef}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => { if (e.key === 'Enter') commit(); if (e.key === 'Escape') { setValue(tab.name); setEditing(false); } }}
+        className="w-24 px-1 py-0 text-xs bg-transparent border-b border-blue-400 outline-none text-gray-900 dark:text-white"
+        onClick={(e) => e.stopPropagation()}
+      />
+    );
+  }
+
+  return (
+    <span
+      className="truncate max-w-[120px]"
+      onDoubleClick={(e) => { e.stopPropagation(); if (active) { setValue(tab.name); setEditing(true); } }}
+    >
+      {tab.name}
+    </span>
+  );
+}
+
+export default function EditorTabs({ tabs, activeId, isModified, onSwitch, onClose, onAdd, onRename }: Props) {
   return (
     <div className="flex items-center border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 no-print overflow-x-auto">
       <div className="flex min-w-0">
@@ -26,7 +68,7 @@ export default function EditorTabs({ tabs, activeId, isModified, onSwitch, onClo
                   : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
               }`}
             >
-              <span className="truncate max-w-[120px]">{tab.name}</span>
+              <TabName tab={tab} active={active} onRename={(name) => onRename(tab.id, name)} />
               {modified && (
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
               )}

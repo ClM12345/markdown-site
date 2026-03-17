@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/intro" element={<IntroPage />} />
         <Route path="/guide" element={<GuidePage />} />
-        <Route path="/editor" element={<EditorPage />} />
+        <Route path="/editor" element={<EditorPage toggleTheme={toggleTheme} />} />
       </Routes>
     </BrowserRouter>
   );
