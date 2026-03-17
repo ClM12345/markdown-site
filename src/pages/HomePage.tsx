@@ -45,6 +45,17 @@ export default function HomePage() {
           </Link>
         ))}
       </div>
+
+      <footer className="mt-24 pt-8 border-t border-gray-200 dark:border-gray-700 text-center space-y-3">
+        <div className="flex justify-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+          <Link to="/terms" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">服务条款</Link>
+          <Link to="/privacy" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">隐私政策</Link>
+          <Link to="/contact" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">联系我们</Link>
+          <Link to="/feedback" className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors">问题反馈</Link>
+        </div>
+        <p className="text-sm text-gray-400 dark:text-gray-500">© 2026 Markdown 工具站</p>
+        <p className="text-xs text-gray-400 dark:text-gray-600">本站为开源工具，所有内容均在本地浏览器处理，不上传或存储任何用户数据</p>
+      </footer>
     </div>
   );
 }
