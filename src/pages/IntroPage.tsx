@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n/context';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 export default function IntroPage() {
   const { t } = useI18n();
+  usePageSEO('intro');
   const i = t.intro;
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">

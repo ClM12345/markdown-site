@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getShortcutGroups } from '../data/shortcutHelp';
 import { shortcutLabel } from '../hooks/useEditorShortcuts';
 import { useI18n } from '../i18n/context';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 const SECTION_IDS = ['quick-start', 'md-basics', 'editor-features', 'file-ops', 'shortcuts', 'faq'];
 
@@ -62,6 +63,7 @@ function FaqBlock({ items }: { items: { q: string; a: string }[] }) {
 
 export default function HelpPage() {
   const { t } = useI18n();
+  usePageSEO('help');
   const h = t.help;
   const titles = h.sectionTitles;
   const key = shortcutLabel('Mod+K');

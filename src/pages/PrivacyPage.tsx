@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 export default function PrivacyPage() {
+  usePageSEO('privacy');
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <Link to="/" className="text-sm text-blue-600 dark:text-blue-400 hover:underline mb-6 inline-block">← 返回首页</Link>

@@ -173,6 +173,18 @@ const zhCN = {
     source: '源码',
     result: '效果',
   },
+  seo: {
+    home: { title: 'Markdown 工具站 — 在线编辑器与语法教学', description: '免费在线 Markdown 编辑器，实时预览、多标签编辑、模板中心、多格式导出，所有数据本地处理，无需登录。', path: '/' },
+    intro: { title: 'Markdown 介绍 — 什么是 Markdown', description: '了解 Markdown 轻量级标记语言的起源、应用场景和核心优势，快速入门文档写作。', path: '/intro' },
+    guide: { title: 'Markdown 语法教学 — 源码与效果对照学习', description: '完整的 Markdown 语法参考，标题、列表、代码块、表格等常用语法源码与渲染效果对照展示。', path: '/guide' },
+    editor: { title: '在线 Markdown 编辑器 — 实时预览与导出', description: '功能齐全的在线 Markdown 编辑器，支持实时预览、快捷键、多标签、模板、搜索替换和多格式导出。', path: '/editor' },
+    help: { title: '帮助中心 — Markdown 工具站', description: '查阅 Markdown 工具站的使用指南、编辑器功能说明、快捷键列表和常见问题解答。', path: '/help' },
+    terms: { title: '服务条款 — Markdown 工具站', description: 'Markdown 工具站服务条款。', path: '/terms' },
+    privacy: { title: '隐私政策 — Markdown 工具站', description: 'Markdown 工具站隐私政策，所有数据均在本地处理。', path: '/privacy' },
+    contact: { title: '联系我们 — Markdown 工具站', description: '联系 Markdown 工具站团队。', path: '/contact' },
+    feedback: { title: '问题反馈 — Markdown 工具站', description: '向 Markdown 工具站提交问题反馈和功能建议。', path: '/feedback' },
+    notFound: { title: '页面未找到 — Markdown 工具站', description: '您访问的页面不存在。', path: '/404' },
+  },
 };
 export default zhCN;
 export type Messages = typeof zhCN;

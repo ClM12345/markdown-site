@@ -175,5 +175,17 @@ const enUS: Messages = {
     source: 'Source',
     result: 'Result',
   },
+  seo: {
+    home: { title: 'Markdown Toolbox — Online Editor & Syntax Guide', description: 'Free online Markdown editor with live preview, multi-tab editing, templates, and multi-format export. All data processed locally, no login required.', path: '/' },
+    intro: { title: 'About Markdown — What is Markdown', description: 'Learn about Markdown, a lightweight markup language — its origins, use cases, and key advantages for document writing.', path: '/intro' },
+    guide: { title: 'Markdown Syntax Guide — Source & Preview Side by Side', description: 'Complete Markdown syntax reference with headings, lists, code blocks, tables and more — source code and rendered output shown side by side.', path: '/guide' },
+    editor: { title: 'Online Markdown Editor — Live Preview & Export', description: 'Full-featured online Markdown editor with live preview, shortcuts, multi-tab, templates, search & replace, and multi-format export.', path: '/editor' },
+    help: { title: 'Help Center — Markdown Toolbox', description: 'Browse usage guides, editor features, keyboard shortcuts, and FAQ for Markdown Toolbox.', path: '/help' },
+    terms: { title: 'Terms of Service — Markdown Toolbox', description: 'Markdown Toolbox terms of service.', path: '/terms' },
+    privacy: { title: 'Privacy Policy — Markdown Toolbox', description: 'Markdown Toolbox privacy policy. All data is processed locally in your browser.', path: '/privacy' },
+    contact: { title: 'Contact Us — Markdown Toolbox', description: 'Contact the Markdown Toolbox team.', path: '/contact' },
+    feedback: { title: 'Feedback — Markdown Toolbox', description: 'Submit bug reports and feature suggestions to Markdown Toolbox.', path: '/feedback' },
+    notFound: { title: 'Page Not Found — Markdown Toolbox', description: 'The page you are looking for does not exist.', path: '/404' },
+  },
 };
 export default enUS;

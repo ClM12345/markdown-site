@@ -2,9 +2,11 @@ import { useMemo } from 'react';
 import { getSyntaxExamples } from '../data/markdownExamples';
 import MarkdownPreview from '../components/MarkdownPreview';
 import { useI18n } from '../i18n/context';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 export default function GuidePage() {
   const { lang, t } = useI18n();
+  usePageSEO('guide');
   const examples = useMemo(() => getSyntaxExamples(lang), [lang]);
 
   return (

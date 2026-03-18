@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n/context';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 const LINKS = ['/guide', '/editor', '/editor', '/editor'];
 
 export default function HomePage() {
   const { t } = useI18n();
+  usePageSEO('home');
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
       <div className="text-center mb-16">

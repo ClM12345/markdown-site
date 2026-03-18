@@ -27,11 +27,13 @@ import { exportMarkdown, exportHTML, exportPDF } from '../utils/export';
 import { readMarkdownFile } from '../utils/file';
 import type { RecentFile } from '../types/workspace';
 import { useI18n } from '../i18n/context';
+import { usePageSEO } from '../hooks/usePageSEO';
 
 const BTN = "px-3 py-1.5 text-xs font-medium rounded-md border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors";
 
 export default function EditorPage({ toggleTheme }: { toggleTheme?: () => void }) {
   const { lang, t } = useI18n();
+  usePageSEO('editor');
   const DEFAULT_MARKDOWN = useMemo(() => getDefaultMarkdown(lang), [lang]);
   const navigate = useNavigate();
   const ws = useWorkspace();

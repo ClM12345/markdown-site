@@ -9,6 +9,7 @@ import PrivacyPage from './pages/PrivacyPage';
 import ContactPage from './pages/ContactPage';
 import FeedbackPage from './pages/FeedbackPage';
 import HelpPage from './pages/HelpPage';
+import NotFoundPage from './pages/NotFoundPage';
 import { useTheme } from './hooks/useTheme';
 import { I18nProvider } from './i18n/context';
 
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="/help" element={<HelpPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </I18nProvider>
